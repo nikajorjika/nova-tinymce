@@ -6,6 +6,7 @@
                     :class="errorClasses"
                     :placeholder="currentField.name"
                     :init="options"
+                    :key="updateIndex"
             ></editor>
 
             <p v-if="hasError" class="my-2 text-danger">
@@ -25,6 +26,12 @@ export default {
     mixins: [DependentFormField, HandlesValidationErrors],
 
     props: ['resourceName', 'resourceId', 'field'],
+    
+    data: function() {
+        return {
+            updateIndex: 0
+        }
+    },
 
     computed: {
         options() {
@@ -64,7 +71,8 @@ export default {
          * Update the field's internal value.
          */
         handleChange(value) {
-          this.value = value
+          this.value = value;
+          this.updateIndex++;
         },
 
         filePicker: function (callback, value, meta) {
